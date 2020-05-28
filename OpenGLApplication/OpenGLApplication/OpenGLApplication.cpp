@@ -184,6 +184,7 @@ int main(void)
 		bool choice2 = false;
 		ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 		glm::vec3 translation(0.0f, 0.0f, 0.0f);
+		glm::vec3 translation2(0.0f, 0.0f, 0.0f);
 
 		float fc = 0.0;
 		/* Loop until the user closes the window */
@@ -209,7 +210,8 @@ int main(void)
 				ImGui::Checkbox("Another Window", &choice2);
 
 				//ImGui::SliderFloat("Translation X:", &translation.x, -1.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-				ImGui::SliderFloat3("Translation Y:", &translation.x, -1.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+				ImGui::SliderFloat3("Translation Y 1:", &translation.x, -1.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+				ImGui::SliderFloat3("Translation Y 2:", &translation2.x, -1.0f, 1.0f);
 				//ImGui::SliderFloat("Translation", &f, -1.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
 				ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
 
@@ -233,6 +235,14 @@ int main(void)
 
 			fc += 0.1f;
 			if (fc > 1.0f) fc = 0.0f;
+
+			//below goes with index buffers
+			renderer.Draw(vao, indexBuff, shaders);
+
+			view = glm::translate(glm::mat4(1.0f), translation2);
+
+			mvp = proj * view * model; //reverse of MVP due to OpenGL being Column Major
+			shaders.setUniformMat4f(attributeMat, mvp);
 
 			//below goes with index buffers
 			renderer.Draw(vao, indexBuff, shaders);
