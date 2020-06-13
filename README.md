@@ -6,3 +6,6 @@
 # OpenGLApplication:
 # Stage: Rendering Multiple Objects:
 ![](OpenGLApplication/Record/MultiObjects.PNG)
+
+# Stage: Testing Framework:
+![](OpenGLApplication/Record/TestFramework1MultiObject.PNG)
