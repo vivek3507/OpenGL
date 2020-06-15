@@ -133,9 +133,15 @@ unsigned int Shaders::getProgramId()
 	return m_objectId;
 }
 
-int Shaders::getUniform(std::string name)
+int Shaders::getUniform(const std::string name) const
 {
-	GL_CALL(unsigned int cLoc = glGetUniformLocation(m_objectId, name.c_str()));
+	if (m_uniforms.find(name) != m_uniforms.end()) {
+		return m_uniforms[name];
+	}
+	GL_CALL(int cLoc = glGetUniformLocation(m_objectId, name.c_str()));
+	//if (cLoc == -1)  assert;
+	m_uniforms[name] = cLoc;
+
 	return cLoc;
 }
 
