@@ -75,6 +75,15 @@
     <ClCompile Include="Tests\Test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Tests\TestBatchRenderingBasic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\TestBatchRenderingColor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\TestBatchRenderingMultiTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VertexBuffer.h">
@@ -137,10 +146,22 @@
     <ClInclude Include="Tests\TestTexture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Tests\TestBatchRenderingBasic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tests\TestBatchRenderingColor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tests\TestBatchRenderingMultiTexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="source.shader">
+    <None Include="res\Shaders\source.shader">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="res\Shaders\BatchRenderingBasicTest.shader" />
+    <None Include="res\Shaders\BatchRenderingColorTest.shader" />
+    <None Include="res\Shaders\BatchRenderingMultiTexture.shader" />
   </ItemGroup>
 </Project>

@@ -1,37 +1,45 @@
-#include "TestTexture.h"
+#include "TestBatchRenderingMultiTexture.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
 
 namespace test {
-	TestTexture::TestTexture(const std::string &shaderCode, const std::string &texturePath)
-		: m_shaders(shaderCode), m_texture(texturePath), m_translationA(0.0f, 0.0f, 0.0f), m_translationB(0.0f, 0.0f, 0.0f),
+	TestBatchRenderingMultiTexture::TestBatchRenderingMultiTexture(const std::string &shaderCode)
+		: m_shaders(shaderCode), m_translationA(0.0f, 0.0f, 0.0f), m_translationB(0.0f, 0.0f, 0.0f),
 		m_proj(glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f)), m_model(glm::rotate(glm::mat4(1.0f), 30.0f, glm::vec3(0.0f, 0.0f, 1.0f)))
 	{
 		Init();
 	}
 
-	TestTexture::TestTexture()
-		: m_shaders("res/Shaders/source.shader"), m_texture("res/Textures/png3.png"), m_translationA(0.0f, 0.0f, 0.0f), m_translationB(0.0f, 0.0f, 0.0f),
+	TestBatchRenderingMultiTexture::TestBatchRenderingMultiTexture()
+		: m_shaders("res/Shaders/BatchRenderingMultiTexture.shader"), m_translationA(0.0f, 0.0f, 0.0f), m_translationB(0.0f, 0.0f, 0.0f),
 		m_proj(glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f)), m_model(glm::rotate(glm::mat4(1.0f), 30.0f, glm::vec3(0.0f, 0.0f, 1.0f)))
 	{
 		Init();
 	}
 
-	void TestTexture::Init()
+	void TestBatchRenderingMultiTexture::Init()
 	{
 		float positions[] =
 		{
-		-0.5f, -0.5f, 0.0f, 0.0f,
-		0.5f, -0.5f, 1.0f, 0.0f,
-		0.5f, 0.5f, 1.0f, 1.0f,
-		-0.5f, 0.5f, 0.0f, 1.0f,
+		-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+		0.5f, -0.5f, 1.0f, 0.0f, 0.0f,
+		0.5f, 0.5f, 1.0f, 1.0f, 0.0f,
+		-0.5f, 0.5f, 0.0f, 1.0f, 0.0f,
+
+		0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+		1.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+		1.f, 1.0f, 1.0f, 1.0f, 1.0f,
+		0.0f, 1.0f, 0.0f, 1.0f, 1.0f
 		};
 
 		unsigned int indices[] = {
 		0, 1, 2, //first triangle
-		2, 3, 0 //second triagnle
+		2, 3, 0, //second triagnle
+
+		4, 5, 6, //first triangle
+		6, 7, 4 //second triagnle
 		};
 
 		//VertexArray vao;
@@ -40,18 +48,19 @@ namespace test {
 		//VertexBuffer vbo;
 		m_vbo.bind();
 
-		m_vbo.setBufferData(16, positions);
+		m_vbo.setBufferData(40, positions);
 
 		//BufferLayout buffLayout;
 		m_buffLayout.addAttribute<float>(0, 2, false);
 		m_buffLayout.addAttribute<float>(1, 2, true);
+		m_buffLayout.addAttribute<float>(2, 1, true);
 
 		m_vao.setBufferLayout(m_buffLayout);
 
 		//ElementArray indexBuff;
 		m_indexBuff.bind();
 
-		m_indexBuff.setIndexBufferData(6, indices);
+		m_indexBuff.setIndexBufferData(12, indices);
 
 		//MVP:Model-View-Projection Matrices => Part of Transformation Pipeline which is applied on each vertex.
 		//Each Matrix is 4x4 matrix and all of them are multiplied in M-V-P order in row major system, OpenGL being Column major
@@ -71,8 +80,35 @@ namespace test {
 		//}
 
 		//Texture texture("res/Textures/png3.png");
-		m_texture.bind();
-		m_shaders.setUniform1i(m_shaders.getUniform("u_Texture"), 0 /*slot number*/);
+		m_textures.reserve(2);
+		m_textures.emplace_back("res/Textures/png3.png");
+		m_textures.emplace_back("res/Textures/png2.png");
+		//m_textures.push_back(Texture("res/Textures/png3.png"));
+		//m_textures.push_back(Texture("res/Textures/png3.png"));
+
+		m_textures[0].bind(0);
+		m_textures[1].bind(1);
+
+		int samplers[] = { 0, 1 };
+
+		//int loc = m_shaders.getUniform("u_Texture[0]");
+		//std::cout << "texture uniform sampler location:" << loc << std::endl;
+		//m_shaders.setUniform1i(loc, 0 /*slot number*/);
+		//loc = m_shaders.getUniform("u_Texture[1]");
+		//std::cout << "texture uniform sampler location:" << loc << std::endl;
+		//m_shaders.setUniform1i(loc, 1 /*slot number*/);
+
+		m_shaders.setUniform1iv(m_shaders.getUniform("u_Texture"), samplers, 2);
+
+		//std::cout << "texture uniform sampler location:" << m_shaders.getUniform("u_TextureA") << std::endl;
+		//std::cout << "texture uniform sampler location:" << m_shaders.getUniform("u_TextureB") << std::endl;
+
+		//m_shaders.setUniform1i(m_shaders.getUniform("u_TextureA"), 0 /*slot number*/);
+		//m_shaders.setUniform1i(m_shaders.getUniform("u_TextureB"), 1 /*slot number*/);
+
+
+
+
 
 		//left-right-bottom-top ranges
 		//othographic projection do not show the sign of persepective projections. Things do not have sense of distnace while looking at them.
@@ -85,7 +121,7 @@ namespace test {
 
 	}
 
-	TestTexture::~TestTexture()
+	TestBatchRenderingMultiTexture::~TestBatchRenderingMultiTexture()
 	{
 		m_vao.unbind();
 		m_vbo.unbind();
@@ -93,12 +129,12 @@ namespace test {
 		m_shaders.unbind();
 	}
 
-	void TestTexture::onUpdate(float detlaTime)
+	void TestBatchRenderingMultiTexture::onUpdate(float detlaTime)
 	{
 
 	}
 
-	void TestTexture::onRender()
+	void TestBatchRenderingMultiTexture::onRender()
 	{
 		m_renderer.clear();
 
@@ -121,25 +157,25 @@ namespace test {
 		//below goes with index buffers
 		m_renderer.Draw(m_vao, m_indexBuff, m_shaders);
 
-		view = glm::translate(glm::mat4(1.0f), m_translationB);
+		//view = glm::translate(glm::mat4(1.0f), m_translationB);
 
-		mvp = m_proj * view * m_model; //reverse of MVP due to OpenGL being Column Major
-		m_shaders.setUniformMat4f(m_attributeMVPMat, mvp);
+		//mvp = m_proj * view * m_model; //reverse of MVP due to OpenGL being Column Major
+		//m_shaders.setUniformMat4f(m_attributeMVPMat, mvp);
 
-		//below goes with index buffers
-		m_renderer.Draw(m_vao, m_indexBuff, m_shaders);
+		////below goes with index buffers
+		//m_renderer.Draw(m_vao, m_indexBuff, m_shaders);
 
 
 	}
 
-	void TestTexture::onImGuiRender()
+	void TestBatchRenderingMultiTexture::onImGuiRender()
 	{
 		//ImGui::Begin("Texture and Multiple Objects!");                          // Create a window called "Hello, world!" and append into it.
 
 		ImGui::Text("Sliders to control translation in X and Y direction.");               // Display some text (you can use a format strings too)
 
 		ImGui::SliderFloat3("Object 1:", &m_translationA.x, -1.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-		ImGui::SliderFloat3("Object 2:", &m_translationB.x, -1.0f, 1.0f);
+		//ImGui::SliderFloat3("Object 2:", &m_translationB.x, -1.0f, 1.0f);
 
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		//ImGui::End();

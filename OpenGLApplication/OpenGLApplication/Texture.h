@@ -12,6 +12,7 @@ class Texture :
 
 public:
 	Texture(std::string path);
+	Texture(Texture&& src); //move constructor
 	~Texture();
 
 	void bind(unsigned int slot = 0);

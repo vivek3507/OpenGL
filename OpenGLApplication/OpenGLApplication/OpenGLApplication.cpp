@@ -26,6 +26,9 @@
 
 #include "Tests/TestClearColor.h"
 #include "Tests/TestTexture.h"
+#include "Tests/TestBatchRenderingBasic.h"
+#include "Tests/TestBatchRenderingColor.h"
+#include "Tests/TestBatchRenderingMultiTexture.h"
 
 //Modern OpenGL
 //Graphics rendering Pipeline (roughly)
@@ -90,6 +93,9 @@ int main(void)
 
 		testMenu->registerTest<test::TestClearColor>("Clear Color");
 		testMenu->registerTest<test::TestTexture>("MultiObject Texture");
+		testMenu->registerTest<test::TestBatchRenderingBasic>("Batch Rendring Basic: Index-Buffer:Single Draw Call");
+		testMenu->registerTest<test::TestBatchRenderingColor>("Batch Rendring Color: Index-Buffer:Single Draw Call");
+		testMenu->registerTest<test::TestBatchRenderingMultiTexture>("Batch Rendring Texture: Multi-Texture:Single Draw Call");
 
 		//testMenu.registerTest<test::TestTexture>("Test Texture");
 
@@ -97,7 +103,7 @@ int main(void)
 		const char* glsl_version = "#version 130";
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
-		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		ImGuiIO& io = ImGui::GetIO();
 		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
 		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 

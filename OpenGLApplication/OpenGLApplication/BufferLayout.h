@@ -129,5 +129,12 @@ stride = 4;
 		m_stride += sizeof(int) * count;
 	}
 
+	template <>
+	void addAttribute<unsigned int>(unsigned int loc, unsigned int count, bool isNormalised)
+	{
+		m_elements.push_back({ false, 0, "", loc, GL_UNSIGNED_INT, count, isNormalised });
+		m_stride += sizeof(unsigned int) * count;
+	}
+
 };
 

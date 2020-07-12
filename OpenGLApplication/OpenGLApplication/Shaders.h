@@ -38,5 +38,6 @@ public:
 	void setUniform4f(unsigned int cLoc, float val1, float val2, float val3, float val4);
 	void setUniformMat4f(unsigned int cLoc, const glm::mat4 mat);
 	void setUniform1i(unsigned int cLoc, int val);
+	void setUniform1iv(unsigned int cLoc, int* val, int size);
 };
 

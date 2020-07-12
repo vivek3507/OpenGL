@@ -139,7 +139,7 @@ int Shaders::getUniform(const std::string name) const
 		return m_uniforms[name];
 	}
 	GL_CALL(int cLoc = glGetUniformLocation(m_objectId, name.c_str()));
-	//if (cLoc == -1)  assert;
+	if (cLoc == -1)  assert(0);
 	m_uniforms[name] = cLoc;
 
 	return cLoc;
@@ -164,5 +164,12 @@ void Shaders::setUniform1i(unsigned int cLoc, int val)
 {
 	if (cLoc >= 0) {
 		GL_CALL(glUniform1i(cLoc, val));
+	}
+}
+
+void Shaders::setUniform1iv(unsigned int cLoc, int* val, int size)
+{
+	if (cLoc >= 0) {
+		GL_CALL(glUniform1iv(cLoc, size, val));
 	}
 }
