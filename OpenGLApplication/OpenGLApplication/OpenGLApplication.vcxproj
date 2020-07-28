@@ -175,6 +175,7 @@
     <ClCompile Include="Tests\TestBatchRenderingColor.cpp" />
     <ClCompile Include="Tests\TestBatchRenderingMultiTexture.cpp" />
     <ClCompile Include="Tests\TestClearColor.cpp" />
+    <ClCompile Include="Tests\TestDynamicBatchRendering.cpp" />
     <ClCompile Include="Tests\TestTexture.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="VertexArray.cpp" />
@@ -200,12 +201,14 @@
     <ClInclude Include="Tests\TestBatchRenderingMultiTexture.h" />
     <ClInclude Include="Tests\TestClearColor.h" />
     <ClInclude Include="Tests\Test.h" />
+    <ClInclude Include="Tests\TestDynamicBatchRendering.h" />
     <ClInclude Include="Tests\TestTexture.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="VertexArray.h" />
     <ClInclude Include="VertexBuffer.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\Shaders\BatchDynamicRendering.shader" />
     <None Include="res\Shaders\BatchRenderingBasicTest.shader" />
     <None Include="res\Shaders\BatchRenderingColorTest.shader" />
     <None Include="res\Shaders\BatchRenderingMultiTexture.shader" />

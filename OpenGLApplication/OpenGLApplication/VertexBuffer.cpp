@@ -17,9 +17,20 @@ VertexBuffer::~VertexBuffer()
 	GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, 0));
 }
 
-void VertexBuffer::setBufferData(size_t count, float * vertices)
+void VertexBuffer::setBufferData(size_t count, float * vertices, bool isDynamic)
 {
-	GL_CALL(glBufferData(GL_ARRAY_BUFFER, count * sizeof(float), vertices, GL_STATIC_DRAW));
+	if (isDynamic) {
+		//ready for dynamic data, by giving nullptr and later filling the data
+		GL_CALL(glBufferData(GL_ARRAY_BUFFER, count * sizeof(float), nullptr, GL_DYNAMIC_DRAW));
+	}
+	else {
+		GL_CALL(glBufferData(GL_ARRAY_BUFFER, count * sizeof(float), vertices, GL_STATIC_DRAW));
+	}
+}
+
+void VertexBuffer::setBufferDataDynamic(size_t size, float * vertices)
+{
+	glBufferSubData(GL_ARRAY_BUFFER, 0, size, vertices);
 }
 
 void VertexBuffer::bind() const

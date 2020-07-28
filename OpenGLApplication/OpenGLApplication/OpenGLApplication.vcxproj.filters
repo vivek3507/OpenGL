@@ -84,6 +84,9 @@
     <ClCompile Include="Tests\TestBatchRenderingMultiTexture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Tests\TestDynamicBatchRendering.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VertexBuffer.h">
@@ -155,6 +158,9 @@
     <ClInclude Include="Tests\TestBatchRenderingMultiTexture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Tests\TestDynamicBatchRendering.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Shaders\source.shader">
@@ -163,5 +169,6 @@
     <None Include="res\Shaders\BatchRenderingBasicTest.shader" />
     <None Include="res\Shaders\BatchRenderingColorTest.shader" />
     <None Include="res\Shaders\BatchRenderingMultiTexture.shader" />
+    <None Include="res\Shaders\BatchDynamicRendering.shader" />
   </ItemGroup>
 </Project>

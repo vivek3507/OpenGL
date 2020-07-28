@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Test.h"
 #include "VertexArray.h"
 #include "VertexBuffer.h"
@@ -9,8 +8,15 @@
 
 namespace test {
 
-	class TestBatchRenderingMultiTexture : public Test
+	class TestDynamicBatchRendering : public Test
 	{
+		struct Vertex
+		{
+			float Positions[2];
+			float TexCoord[2];
+			float TexID;
+		};
+
 		VertexArray m_vao;
 		VertexBuffer m_vbo;
 		BufferLayout m_buffLayout;
@@ -28,10 +34,12 @@ namespace test {
 		int m_attributeMVPMat;
 
 		void Init();
+		void makePositions(Vertex* vts);
+
 	public:
-		TestBatchRenderingMultiTexture();
-		TestBatchRenderingMultiTexture(const std::string &shaderCode);
-		~TestBatchRenderingMultiTexture();
+		TestDynamicBatchRendering();
+		TestDynamicBatchRendering(const std::string &shaderCode);
+		~TestDynamicBatchRendering();
 
 		void onUpdate(float detlaTime) override;
 		void onRender() override;

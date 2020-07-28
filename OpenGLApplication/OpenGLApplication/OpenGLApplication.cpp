@@ -29,6 +29,7 @@
 #include "Tests/TestBatchRenderingBasic.h"
 #include "Tests/TestBatchRenderingColor.h"
 #include "Tests/TestBatchRenderingMultiTexture.h"
+#include "Tests/TestDynamicBatchRendering.h"
 
 //Modern OpenGL
 //Graphics rendering Pipeline (roughly)
@@ -96,6 +97,7 @@ int main(void)
 		testMenu->registerTest<test::TestBatchRenderingBasic>("Batch Rendring Basic: Index-Buffer:Single Draw Call");
 		testMenu->registerTest<test::TestBatchRenderingColor>("Batch Rendring Color: Index-Buffer:Single Draw Call");
 		testMenu->registerTest<test::TestBatchRenderingMultiTexture>("Batch Rendring Texture: Multi-Texture:Single Draw Call");
+		testMenu->registerTest<test::TestDynamicBatchRendering>("Dynamic Batch Rendring Texture: Multi-Texture:Single Draw Call");
 
 		//testMenu.registerTest<test::TestTexture>("Test Texture");
 
