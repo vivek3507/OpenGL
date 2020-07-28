@@ -196,7 +196,8 @@ namespace test {
 		//VertexBuffer vbo;
 
 		m_vbo.bind();
-		m_vbo.setBufferDataDynamic(8*sizeof(Vertex), (float*)vts);
+		m_vbo.setBufferDataDynamic(8*sizeof(Vertex), (float*)vts); //as whole data structure is made of float this conversion will work as this may not require
+																	//padding and alignment issue.
 
 	}
 
